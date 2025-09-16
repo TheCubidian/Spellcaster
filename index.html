@@ -2,102 +2,54 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Pyodide Terminal Demo</title>
-
-<!-- 1️⃣ Load Pyodide from the official CDN -->
+<title>Pyodide – external script</title>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
-
 <style>
-  body {font-family: Arial, sans-serif; margin: 2rem;}
-  #terminal {
-    background:#111;
-    color:#0f0;
-    padding:1rem;
-    border-radius:4px;
-    white-space: pre-wrap;   /* keep line‑breaks */
-    font-family: monospace;
-    min-height: 200px;
-    overflow:auto;
-  }
+  #term {background:#111;color:#0f0;padding:1rem;font-family:monospace;white-space:pre-wrap;min-height:200px;}
 </style>
 </head>
-
 <body>
-<h2>🖥️ Pyodide Terminal</h2>
-<div id="terminal">(initialising…)</div>
+<h2>Pyodide – external script demo</h2>
+<div id="term">(loading…)</div>
 
 <script>
-/* ------------------------------------------------------------------
-   2️⃣ Helper: capture stdout / stderr from Pyodide
-   ------------------------------------------------------------------ */
-function createStdoutCapture(targetElem) {
-  let buffer = "";
-  return {
-    write: s => {
-      buffer += s;
-      // Update the visible terminal incrementally (nice for long runs)
-      targetElem.textContent = buffer;
-    },
-    flush: () => {},                 // required API stub
-    get: () => buffer,
-    clear: () => { buffer = ""; targetElem.textContent = ""; }
-  };
-}
-
-/* ------------------------------------------------------------------
-   3️⃣ Load Pyodide once the page is ready
-   ------------------------------------------------------------------ */
 (async () => {
-  const termDiv = document.getElementById('terminal');
-  termDiv.textContent = '⏳ Loading Pyodide…';
+  const term = document.getElementById('term');
 
+  // ---------- 1️⃣ Load Pyodide ----------
+  term.textContent = '⏳ Loading Pyodide…';
+  const pyodide = await loadPyodide({
+    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
+  });
+
+  // ---------- 2️⃣ Hook stdout / stderr ----------
+  const capture = {
+    buf: '',
+    write(s) { this.buf += s; term.textContent = this.buf; },
+    flush() {}
+  };
+  pyodide.setStdout(capture);
+  pyodide.setStderr(capture);
+
+  // ---------- 3️⃣ OPTIONAL: load extra packages ----------
+  // await pyodide.loadPackage(['numpy']);   // example
+
+  // ---------- 4️⃣ Fetch the external .py file ----------
+  // Change the URL to wherever you host your script.
+  const scriptUrl = 'spellcaster.py';   // <-- relative to this HTML file
+  term.textContent = '📥 Fetching script…';
+  const resp = await fetch(scriptUrl);
+  if (!resp.ok) throw new Error(`Failed to download ${scriptUrl}: ${resp.status}`);
+
+  const pythonCode = await resp.text();
+
+  // ---------- 5️⃣ Run the downloaded code ----------
+  term.textContent = '🚀 Executing script…\n';
   try {
-    const pyodide = await loadPyodide({
-      indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
-    });
-
-    // Attach our capture objects
-    const stdout = createStdoutCapture(termDiv);
-    pyodide.setStdout({write: stdout.write, flush: stdout.flush});
-    pyodide.setStderr({write: stdout.write, flush: stdout.flush});
-
-    termDiv.textContent = '🚀 Pyodide ready – executing script…\n';
-
-    /* ----------------------------------------------------------------
-       4️⃣ The Python code you want to run automatically.
-          Replace the triple‑quoted string with any script you like.
-       ---------------------------------------------------------------- */
-    const pythonCode = `
-# Example script – replace with your own logic
-import sys, math, datetime
-
-print("=== Welcome to the Pyodide terminal ===")
-print(f"Python version: {sys.version.split()[0]}")
-print(f"Current UTC time: {datetime.datetime.utcnow().isoformat()}")
-
-# Simple computation demo
-def fib(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
-
-print("fib(20) =", fib(20))
-print("sqrt(2) =", math.sqrt(2))
-
-# You can import additional packages via pyodide.loadPackage(...)
-# e.g., await pyodide.loadPackage('numpy')
-`;
-
-    // Run the script asynchronously – any uncaught Python exception
-    // will be turned into a JavaScript Error and caught below.
     await pyodide.runPythonAsync(pythonCode);
-
-    // If the script finishes without raising, we already displayed all output.
-    termDiv.textContent += "\n✅ Script finished.";
-  } catch (err) {
-    // Show a nicely formatted traceback / JS error
-    termDiv.textContent += `\n❌ Error:\n${err.message || err}`;
+    term.textContent += '\n✅ Done.';
+  } catch (e) {
+    term.textContent += `\n❌ Error:\n${e.message || e}`;
   }
 })();
 </script>

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Pyodide – external script</title>
+<title>Spellcaster</title>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <style>
-  #term {background:#111;color:#0f0;padding:1rem;font-family:monospace;white-space:pre-wrap;min-height:200px;}
+  #term {background:#111;color:#0f0;padding:1rem;font-family:tahoma;white-space:pre-wrap;min-height:200px;}
 </style>
 </head>
 <body>
-<h2>Pyodide – external script demo</h2>
+<h2>Spellcaster</h2>
 <div id="term">(loading…)</div>
 
 <script>
@@ -36,7 +36,7 @@
 
   // ---------- 4️⃣ Fetch the external .py file ----------
   // Change the URL to wherever you host your script.
-  const scriptUrl = 'spellcaster.py';   // <-- relative to this HTML file
+  const scriptUrl = 'Spellcaster.py';   // <-- relative to this HTML file
   term.textContent = '📥 Fetching script…';
   const resp = await fetch(scriptUrl);
   if (!resp.ok) throw new Error(`Failed to download ${scriptUrl}: ${resp.status}`);

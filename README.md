@@ -8,7 +8,7 @@ and push down the Enter key...
 This is a simple but nevertheless entertaining python game where the aim of the game is to defeat enemies you come across in a command line environment with spells you choose. The effectiveness of your choice is based on the enemy's weakness (and strength) which you are supposed to figure out yourself by common sense and some good ol' trial and error!
 ***
 To be able to run this script on your PC, follow this guide:
-1. Use your system package manager to install python (it's python3 here since python will install python v2 which has reached end-of-life and frankly shouldn't be used for scripts that were made on and for python v3)
+1. Use your system package manager to install python (it's `python3` here since `python` will install python v2 which has reached end-of-life and frankly shouldn't be used for scripts that were made on and for python v3)
 ## Windows (Powershell)
 ```powershell
 winget install Python.Python.3

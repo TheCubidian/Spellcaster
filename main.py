@@ -70,12 +70,12 @@ Choose your \033[38;2;200;200;200mdifficulty\033[0m:
         try:
             difficulty = int(input(""))
         except:
-            print("You did not enter a valid answer. Try again.")
+            print("You did not enter a valid response. Try again.")
         else:
             if 1 <= difficulty <= 3:
                 break
             else:
-                print("You did not enter a valid answer. Try again.")
+                print("You did not enter a valid response. Try again.")
     if difficulty == 1:
         num_chars = 2
         rounds = 8
@@ -93,29 +93,30 @@ Choose your \033[38;2;200;200;200mdifficulty\033[0m:
         chars.remove(chosen_chars[0])
         counter -= 1
     counter = 0
-    print("You have", rounds, "rounds to defeat all monsters! GO!")
+    print("\nYou have\033[1m", rounds, "\033[0mrounds to defeat all monsters! \033[1mGO!\033[0m")
     current = chosen_chars[0]
     curr_health = health.get(current)
     for b in range(rounds):
         current = chosen_chars[0]
-        print("Enemy: ", current, "\nRound ", b + 1, "\nType: ", e_type.get(current),
+        print("\nEnemy: ", current, "\nRound ", b + 1, "\nType: ", e_type.get(current),
         "\nResistance Multiplier: ", resistance.get(current), "\nHealth: ", curr_health, "\nChoose a spell:", sep = "")
         time.sleep(0.8)
         for key in spells:
             counter += 1
-            print(counter, "for", key)
+            print("\033[1m" + str(counter), "\033[0mfor", key)
             time.sleep(0.1)
         counter = 0
         while True:
             try:
-                spell_c = int(input("Make your decision: "))
+                spell_c = int(input("\nMake your decision: \033[38;2;42;194;51m"))
+                print("\033[0m")
             except:
-                print("You did not enter a valid answer. Try again.")
+                print("\nYou did not enter a valid response. Try again.")
             else:
                 if 1 <= spell_c <= 10:
                     break
                 else: 
-                    print("You did not enter a valid answer. Try again.")
+                    print("You did not enter a valid response. Try again.")
         if spell_c == weakness.index(current) + 1:
             print("Your spell was extremely effective against the enemy!")
             curr_health -= 70 / resistance.get(current)
@@ -158,7 +159,7 @@ Choose your \033[38;2;200;200;200mdifficulty\033[0m:
             time.sleep(0.5)
             coun = int(input("Do you want to play again? 0 for no, 1 for yes. "))
         except:
-            print("You did not enter a valid answer. Try again.")
+            print("You did not enter a valid response. Try again.")
         else:
             if coun == 1:
                 print("Restarting....")
@@ -169,4 +170,4 @@ Choose your \033[38;2;200;200;200mdifficulty\033[0m:
                 print("Ending....")
                 break
             else:
-                print("You did not enter a valid answer. Try again.")
+                print("You did not enter a valid response. Try again.")

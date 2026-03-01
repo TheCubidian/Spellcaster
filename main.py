@@ -58,10 +58,10 @@ while coun == 1:
     print("""
                ©Ibrahim Malas
 
-█     █     █  █████  █████     █    ████   ████   █
+\033[38;2;255;255;100m█     █     █  █████  █████     █    ████   ████   █
  █   █ █   █     █       █     █ █   █   █  █   █  █
   █ █   █ █      █      █     █████  ████   █   █
-   █     █     █████   █████  █   █  █   █  ████   █\n
+   █     █     █████   █████  █   █  █   █  ████   █\033[0m\n
 Save the lands with your mighty staff of power! You have a limited number of turns to defeat all of the enemies.
 Each enemy has its type, resistance (defence), and health shown. Also, Wood types are made of inflammable wood.
 Choose your difficulty:

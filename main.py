@@ -58,14 +58,14 @@ while coun == 1:
     print("""
                ©Ibrahim Malas
 
-\033[38;2;255;255;100m█     █     █  █████  █████     █    ████   ████   █
+\033[38;2;255;255;120m█     █     █  █████  █████     █    ████   ████   █
  █   █ █   █     █       █     █ █   █   █  █   █  █
   █ █   █ █      █      █     █████  ████   █   █
    █     █     █████   █████  █   █  █   █  ████   █\033[0m\n
-Save the lands with your mighty staff of power! You have a limited number of turns to defeat all of the enemies.
-Each enemy has its type, resistance (defence), and health shown. Also, Wood types are made of inflammable wood.
-Choose your difficulty:
-1 for Easy (2 enemies, 8 rounds) \n2 for Normal (4 enemies, 14 rounds) \n3 for Nightmare (7 enemies, 24 rounds)""")
+\033[1mSave the lands\033[0m with your \033[1mmighty staff of power!\033[0m You have a \033[1mlimited\033[0m number of \033[1mturns\033[0m to \033[1mdefeat\033[0m all of the \033[1menemies\033[0m.
+Each enemy has its \033[38;2;85;0;189mtype\033[0m, \033[38;2;0;58;208mresistance\033[0m (defence), and \033[38;2;235;50;0mhealth\033[0m shown. Also, Wood types are made of inflammable wood.
+Choose your \033[38;2;200;200;200mdifficulty\033[0m:
+\033[1m1\033[0m for \033[38;2;124;255;112mEasy\033[0m (2 enemies, 8 rounds) \n\033[1m2\033[0m for \033[38;2;255;255;112mNormal\033[0m (4 enemies, 14 rounds) \n\033[1m3\033[0m for \033[38;2;149;0;0mNightmare\033[0m (7 enemies, 24 rounds)""")
     while True:
         try:
             difficulty = int(input(""))
